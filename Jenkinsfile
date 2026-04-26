@@ -1,32 +1,25 @@
 pipeline {
     agent any
-
     tools {
         maven 'Maven3'
     }
-
     stages {
-
-        stage('CHECKOUT') {
-            steps {
-                git 'https://github.com/sowjanya-m025/demo.git'
-            }
-        }
-
+        // REMOVED the manual CHECKOUT stage. Jenkins does this automatically!
+        
         stage('Build') {
             steps {
-                dir('demo') {
-                    sh 'mvn clean install'
+                // Only use dir('demo') if your pom.xml is inside a folder named 'demo'
+                dir('demo'){
+                    bat 'mvn clean install'
                 }
             }
         }
-
         stage('Test') {
             steps {
-                dir('demo') {
-                    sh 'mvn test'
-                }
+                dir('demo'){
+                    bat 'mvn test'}
             }
         }
     }
 }
+                
